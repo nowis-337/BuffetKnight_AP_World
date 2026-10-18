@@ -1,4 +1,4 @@
-# Setup Guide - Buffet Knight - Decadent Full Course
+# Buffet Knight - Decadent Full Course - Archipelago Support
 
 ## Requirements
 - Buffet Knight - Decadent Full Course on [Steam](https://store.steampowered.com/app/3072480/Buffet_Knight__Decadent_Full_Course/).
