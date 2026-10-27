@@ -1,7 +1,7 @@
 # Buffet Knight - Decadent Full Course - Archipelago Support
 
 ## Requirements
-- Buffet Knight - Decadent Full Course on [Steam](https://store.steampowered.com/app/3072480/Buffet_Knight__Decadent_Full_Course/).
+- Buffet Knight - Decadent Full Course on [Steam](https://store.steampowered.com/app/3072480/Buffet_Knight__Decadent_Full_Course/). Supported in Ver 1.1.1.2
 - Buffet Knight AP World file (buffetknight.apworld) located in the Buffet Knight Steam installation folder "archipelago/buffetknight.apworld" or from [Github](https://github.com/nowis-337/BuffetKnight_AP_World/releases).
 
 ## Game Setup Instructions
