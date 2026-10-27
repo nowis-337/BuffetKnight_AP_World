@@ -26,7 +26,7 @@ class Goal(Choice):
 
 class ExludeSecret(Toggle):
     """
-    Option to exclude Secret Dungeon for progresion items in the multiworld.
+    Option to exclude Secret Dungeon for progression items in the multiworld.
     """
     display_name = "Exclude Secret Dungeon"
     default = 1
@@ -39,7 +39,6 @@ class BKOptions(PerGameCommonOptions):
     exclude_secret: ExludeSecret
 
 
-# If we want to group our options by similar type, we can do so as well. This looks nice on the website.
 option_groups = [
     OptionGroup(
         "Gameplay Options",
@@ -54,7 +53,7 @@ option_presets = {
         "exclude_secret": 1,
     },
     "Decadent Full Course": {
-        "hard_mode": 1,
+        "hard_mode": 0,
         "goal": 1,
         "exclude_secret": 0,
     },

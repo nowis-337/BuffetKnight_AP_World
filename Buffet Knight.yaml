@@ -63,11 +63,9 @@ Buffet Knight:
     full: 50
     minimal: 0
 
-  hard_mode:
-    # Option to toggle advanced logic that may include sequence-breaks in item placement.
-    'false': 50
-    'true': 0
-
+  ####################
+  # Gameplay Options #
+  ####################
   goal:
     # Selects the victory condition of the game.
     # Default: Requires the collection of all ingredients and at least achieving the "Insatiable Black Hole" Ending.
@@ -76,9 +74,14 @@ Buffet Knight:
     fullcourse: 0
 
   exclude_secret:
-    # Option to exclude Secret Dungeon for progresion items in the multiworld.
+    # Option to exclude Secret Dungeon for progression items in the multiworld.
     'false': 0
     'true': 50
+
+  hard_mode:
+    # Option to toggle advanced logic that may include sequence-breaks in item placement.
+    'false': 50
+    'true': 0
 
   ###########################
   # Item & Location Options #

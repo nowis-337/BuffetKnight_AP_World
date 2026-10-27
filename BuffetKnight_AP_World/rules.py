@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from BaseClasses import CollectionState
+from BaseClasses import (CollectionState, LocationProgressType)
 from worlds.generic.Rules import add_rule, set_rule
 
 if TYPE_CHECKING:
@@ -112,12 +112,8 @@ def set_all_entrance_rules(world: BKWorld) -> None:
     set_rule(world.get_entrance("Casino_Endgame_Entrance"), casino_endgame_access)
 
     #Secret Dungeon
-    if world.options.exclude_secret:
-        set_rule(world.get_entrance("Secret_Dungeon_Entrance"), lambda state: state.has("Victory_Accessible", world.player))
-    else:
-        set_rule(world.get_entrance("Secret_Dungeon_Entrance"), can_access_secret_dungeon)
-
-
+    set_rule(world.get_entrance("Secret_Dungeon_Entrance"), can_access_secret_dungeon)
+ 
 
 def set_all_location_rules(world: BKWorld) -> None:
     
@@ -157,9 +153,6 @@ def set_all_location_rules(world: BKWorld) -> None:
             if state.has(item, world.player): ore_count += 1
         return ore_count >= 9
 
-    def all_ingredients_collected(state: CollectionState) -> bool:
-        return skill_bomb(state) and skill_heal(state) and skill_shock(state) and skill_bounce(state) and skill_shell(state)
-
     set_rule(world.get_location("Town_Blacksmith_Weapon_Upgrade_1"), blacksmith_ore_2)
     set_rule(world.get_location("Town_Blacksmith_Weapon_Upgrade_2"), blacksmith_ore_5)
 
@@ -196,9 +189,7 @@ def set_all_location_rules(world: BKWorld) -> None:
     set_rule(world.get_location("Beach_Field_1"), skill_bounce)
     set_rule(world.get_location("Beach_Field_3_Secretary"), lambda state: state.has("Jolly Meal Delivery", world.player))
 
-
     set_rule(world.get_location("Tower_Ground_Boss_Key"), lambda state: state.has("Storage Key", world.player))
-
 
     #Advanced Logic
     if world.options.hard_mode:
@@ -224,8 +215,9 @@ def set_all_location_rules(world: BKWorld) -> None:
                 access = True
                 treasure = True
             if state.has("Dungeon_3_Access", world.player): #Maybe too difficult?
-                access = True
+                #access = True
                 #treasure = True
+                pass
             return access and treasure
         
         set_rule(world.get_location("Mountain_Challenge_Cave"), mountain_challenge_cave_access)
@@ -263,15 +255,19 @@ def set_all_location_rules(world: BKWorld) -> None:
         set_rule(world.get_location("Beach_Cave_1"), skill_bomb)
         set_rule(world.get_entrance("Sewer_Den_Entrance"), skill_shock)
         set_rule(world.get_entrance("Sea_Clam_Cave_Entrance"), skill_shell)
-
         set_rule(world.get_location("Mountain_Challenge_Cave"), lambda state: state.has_all(("Bubble Gum Potion", "Bouncy Gum"), world.player))
         set_rule(world.get_location("Desert_Challenge_Cave"), lambda state: state.has_all(("Chilli Bomb", "Molten Potion"), world.player))
 
-    #Exclude locations
-    set_rule(world.get_location("Stomach_Dungeon_Cave"), lambda state: state.has("Victory_Accessible", world.player))
-    set_rule(world.get_location("Stomach_Dungeon_Intestines"), lambda state: state.has("Victory_Accessible", world.player))
-    
-    #Fixed locations
+
+    #Force exclude locations (MISSABLE)
+    world.get_location("Stomach_Dungeon_Cave").progress_type = LocationProgressType.EXCLUDED
+    world.get_location("Stomach_Dungeon_Intestines").progress_type = LocationProgressType.EXCLUDED
+
+    if world.options.exclude_secret:
+        world.get_location("Secret_Gallery").progress_type = LocationProgressType.EXCLUDED
+        world.get_location("Secret_End").progress_type = LocationProgressType.EXCLUDED
+
+    #Fixed locations - not included
     #set_rule(world.get_location("Swamp_Ingredients_Gathered"), all_ingredients_collected)
     #set_rule(world.get_location("Swamp_Witch_Relics_Gathered"), lambda state: state.has_all(["Relic Fragment 1", "Relic Fragment 2", "Relic Fragment 3", "Relic Fragment 4", "Relic Fragment 5", "Relic Fragment 6"], world.player))
     #set_rule(world.get_location("Swamp_Witch_End_Game"), lambda state: state.has_all(["Endgame_Reached", "Gastronomancy Essence"], world.player))
@@ -281,32 +277,10 @@ def set_all_location_rules(world: BKWorld) -> None:
 
 def set_all_event_rules(world: BKWorld) -> None:
 
-    def victory_access(state: CollectionState) -> bool:
-        #Filtering all important-ish stuff to distribute into missable areas
-        # Have access to all the ores
-        ore_array = ["Mineral Ore 1","Mineral Ore 2","Mineral Ore 3","Mineral Ore 4","Mineral Ore 5","Mineral Ore 6","Mineral Ore 7","Mineral Ore 8","Mineral Ore 9"]
-        ore_count = 0
-        for item in ore_array:
-            if state.has(item, world.player): ore_count += 1
-        if ore_count < 9:
-            return False
-
-        # Have access to all base skills
-        if not state.has_all(("Heartful Fruit","Chilli Bomb","Chitin Shell","Bouncy Gum", "Lemon Shock"), world.player):
-            return False
-
-        # Have basic upgrade
-        if not state.has("Witch's Brew", world.player):
-            return False
-        
-        return True
-
-
     set_rule(world.get_location("Event_Desert_Dungeon_Entry_Permission"), lambda state: state.has("Red Juicy Tomato", world.player))
     set_rule(world.get_location("Event_Gastronomancy_Potion_Get"), lambda state: state.has_all(("Demon_Chef_Defeated", "Gastronomancy Essence"), world.player))
     set_rule(world.get_location("Event_Forbidden_Insight_Get"), lambda state: state.has_all(("Relic Fragment 1","Relic Fragment 2","Relic Fragment 3","Relic Fragment 4","Relic Fragment 5"), world.player))
     set_rule(world.get_location("Event_Mysterious_Fried_Chicken_Get"), lambda state: state.has_all(("Ambrosial Herb","Fiery Pepper","Celestial Sugar","M.S.G.","Abyssal Salt"), world.player))
-    set_rule(world.get_location("Event_Victory_Accessible"), victory_access)
 
 def set_completion_condition(world: BKWorld) -> None:
     world.multiworld.completion_condition[world.player] = lambda state: state.has("Endgame_Reached", world.player)
