@@ -8,6 +8,7 @@ class HardMode(Toggle):
     Option to toggle advanced logic that may include sequence-breaks in item placement.
     """
     display_name = "Advanced Logic"
+    default = 0
 
 
 class Goal(Choice):
@@ -28,6 +29,7 @@ class ExludeSecret(Toggle):
     Option to exclude Secret Dungeon for progresion items in the multiworld.
     """
     display_name = "Exclude Secret Dungeon"
+    default = 1
 
 
 @dataclass
@@ -47,12 +49,12 @@ option_groups = [
 
 option_presets = {
     "Default Adventure": {
-        "hard_mode": False,
+        "hard_mode": 0,
         "goal": 0,
         "exclude_secret": 1,
     },
     "Decadent Full Course": {
-        "hard_mode": False,
+        "hard_mode": 1,
         "goal": 1,
         "exclude_secret": 0,
     },

@@ -44,7 +44,7 @@ The game progresses mostly the same as a normal playthrough with items, skills a
 - Accessory Slot Upgrades
 - Relics
 
-If the "Exclude Secret Dungeon" option is selected, no progression items will be placed in the secret dream dungeon.
+If the "Exclude Secret Dungeon" option is selected, no important items will be placed in the secret dream dungeon.
 
 
 ## What does another world's item look like in Buffet Knight?

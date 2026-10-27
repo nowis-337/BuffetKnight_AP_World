@@ -31,7 +31,7 @@ LOCATION_NAME_TO_ID = {
     "Forest_Field_Crossroads": 14,
 
     #Swamp and Witch
-    "Swamp_Ingredients_Gathered": 15,
+    "Swamp_Ingredients_Gathered": 15, #FIXED LOCATION - Mysterious Fried Chicken
     "Swamp_Witch_Intoduction": 16,
     "Swamp_Witch_Relics_Gathered": 17, #FIXED LOCATION - Forbidden Insight
     "Swamp_Witch_End_Game": 18, #FIXED LOCATION - Gastronomancy Potion 
@@ -347,6 +347,8 @@ def create_events(world: BKWorld) -> None:
     world.get_region("Dungeon_Tower_Boss").add_event("Event_Demon_Chef_Defeated", "Demon_Chef_Defeated", location_type = BKLocation, item_type = items.BKItem)
     world.get_region("Overworld_1").add_event("Event_Gastronomancy_Potion_Get", "Gastronomancy_Potion_Get", location_type = BKLocation, item_type = items.BKItem)
     world.get_region("Overworld_1").add_event("Event_Forbidden_Insight_Get", "Forbidden_Insight_Get", location_type = BKLocation, item_type = items.BKItem)
+    world.get_region("Overworld_1").add_event("Event_Mysterious_Fried_Chicken_Get", "Mysterious_Fried_Chicken_Get", location_type = BKLocation, item_type = items.BKItem)
+
 
     world.get_region("Endgame").add_event("Event_Endgame_Reached", "Endgame_Reached", location_type = BKLocation, item_type = items.BKItem)
     world.get_region("Endgame").add_event("Event_Victory_Accessible", "Victory_Accessible", location_type = BKLocation, item_type = items.BKItem)

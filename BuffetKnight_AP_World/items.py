@@ -23,7 +23,7 @@ ITEM_NAME_TO_ID = {
     "Stainless Steel Knife":13,
     "Ultimaxcalibur(TM)": 14,
     #"Forbidden Insight": 15,
-    "Mysterious Fried Chicken": 16,
+    #"Mysterious Fried Chicken": 16,
     "Mineral Ore 1": 17,
     "Mineral Ore 2": 18,
     "Mineral Ore 3": 19,
@@ -154,7 +154,7 @@ DEFAULT_ITEM_CLASSIFICATIONS = {
     "Stainless Steel Knife": ItemClassification.progression | ItemClassification.useful,
     "Ultimaxcalibur(TM)": ItemClassification.useful,
     #"Forbidden Insight": ItemClassification.progression, #FIXED ITEM
-    "Mysterious Fried Chicken": ItemClassification.progression,
+    #"Mysterious Fried Chicken": ItemClassification.progression, #FIXED ITEM
     "Mineral Ore 1": ItemClassification.progression,
     "Mineral Ore 2": ItemClassification.progression,
     "Mineral Ore 3": ItemClassification.progression,

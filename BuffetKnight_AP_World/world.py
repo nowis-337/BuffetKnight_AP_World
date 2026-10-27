@@ -42,4 +42,4 @@ class BKWorld(World):
     # slot_data is just a dictionary using basic types, that will be converted to json when sent to the client.
     def fill_slot_data(self) -> Mapping[str, Any]:
         # If you need access to the player's chosen options on the client side, there is a helper for that.
-        return self.options.as_dict("hard_mode")
+        return self.options.as_dict("hard_mode", "goal", "exclude_secret")

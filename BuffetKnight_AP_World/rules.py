@@ -95,7 +95,7 @@ def set_all_entrance_rules(world: BKWorld) -> None:
     set_rule(world.get_entrance("Factory_Dungeon_Entrance"), lambda state: state.has("Factory Key", world.player))
     set_rule(world.get_entrance("Ocean_Dungeon_Entrance"), lambda state: state.has("Note in a Bottle", world.player))
 
-    set_rule(world.get_entrance("Tower_Dungeon_Entrance"), lambda state: state.has("Mysterious Fried Chicken", world.player))
+    set_rule(world.get_entrance("Tower_Dungeon_Entrance"), lambda state: state.has("Mysterious_Fried_Chicken_Get", world.player))
     set_rule(world.get_entrance("Tower_Dungeon_Boss_Door"), lambda state: state.has("Tower Master Key", world.player))
 
     set_rule(world.get_entrance("Casino_Dungeon_Entrance"), can_access_casino_dungeon)
@@ -220,7 +220,7 @@ def set_all_location_rules(world: BKWorld) -> None:
             if state.has_all(("Bubble Gum Potion", "Bouncy Gum"), world.player):
                 access = True
                 treasure = True
-            if state.has("Ultimaxcalibur(TM)", world.player):
+            if state.has_all(("Ultimaxcalibur(TM)", "Shish-Kebab"), world.player):
                 access = True
                 treasure = True
             if state.has("Dungeon_3_Access", world.player): #Maybe too difficult?
@@ -238,7 +238,7 @@ def set_all_location_rules(world: BKWorld) -> None:
                 treasure = True
             if state.has("Chilli Bomb", world.player): treasure = True
             if state.has("Dungeon_2_Access", world.player): access = True
-            if state.has("Ultimaxcalibur(TM)", world.player): access = True
+            if state.has_all(("Ultimaxcalibur(TM)", "Shish-Kebab"), world.player): access = True
 
             return access and treasure
         
@@ -281,10 +281,32 @@ def set_all_location_rules(world: BKWorld) -> None:
 
 def set_all_event_rules(world: BKWorld) -> None:
 
+    def victory_access(state: CollectionState) -> bool:
+        #Filtering all important-ish stuff to distribute into missable areas
+        # Have access to all the ores
+        ore_array = ["Mineral Ore 1","Mineral Ore 2","Mineral Ore 3","Mineral Ore 4","Mineral Ore 5","Mineral Ore 6","Mineral Ore 7","Mineral Ore 8","Mineral Ore 9"]
+        ore_count = 0
+        for item in ore_array:
+            if state.has(item, world.player): ore_count += 1
+        if ore_count < 9:
+            return False
+
+        # Have access to all base skills
+        if not state.has_all(("Heartful Fruit","Chilli Bomb","Chitin Shell","Bouncy Gum", "Lemon Shock"), world.player):
+            return False
+
+        # Have basic upgrade
+        if not state.has("Witch's Brew", world.player):
+            return False
+        
+        return True
+
+
     set_rule(world.get_location("Event_Desert_Dungeon_Entry_Permission"), lambda state: state.has("Red Juicy Tomato", world.player))
     set_rule(world.get_location("Event_Gastronomancy_Potion_Get"), lambda state: state.has_all(("Demon_Chef_Defeated", "Gastronomancy Essence"), world.player))
     set_rule(world.get_location("Event_Forbidden_Insight_Get"), lambda state: state.has_all(("Relic Fragment 1","Relic Fragment 2","Relic Fragment 3","Relic Fragment 4","Relic Fragment 5"), world.player))
-
+    set_rule(world.get_location("Event_Mysterious_Fried_Chicken_Get"), lambda state: state.has_all(("Ambrosial Herb","Fiery Pepper","Celestial Sugar","M.S.G.","Abyssal Salt"), world.player))
+    set_rule(world.get_location("Event_Victory_Accessible"), victory_access)
 
 def set_completion_condition(world: BKWorld) -> None:
     world.multiworld.completion_condition[world.player] = lambda state: state.has("Endgame_Reached", world.player)
